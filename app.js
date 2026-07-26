@@ -351,7 +351,7 @@ function renderStatic() {
       <span class="tag ${b.type === "normal" ? "b" : "m"}">${b.type === "normal" ? T.chargeTagN : T.chargeTagL}</span>
       <div class="btnset">
         <button class="btn tert" data-b="${b.id}" data-n="1">${T.pull1}</button>
-        <button class="btn ${b.type === "normal" ? "" : "sec"}" data-b="${b.id}" data-n="10">${T.pull10}</button>
+        <button class="btn" data-b="${b.id}" data-n="10">${T.pull10}</button>
       </div>
     </div>`,
   ).join("");
