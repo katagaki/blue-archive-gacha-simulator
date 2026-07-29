@@ -12,18 +12,9 @@ const I18N = {
     tagL: "限定PU C・D 共有",
     s100: "100<br>★3確定・PU 50%",
     s200: "200<br>PU確定",
-    h7: "青輝石",
-    p7: "1回募集は 120、10回募集は 1200 を消費する。所持数が足りない募集は選択できない。",
-    lblBal: "所持青輝石",
-    tagCost: "1回 120 / 10回 1200",
     lblStart: "初期所持数",
-    lblSpent: "消費した青輝石",
     pyroLabel: "青輝石",
     pyroHint: "募集済みの分はそのまま維持される。",
-    pyroPulls: (n) => `${n} 回募集した。`,
-    pyroOf: (n) => `/ ${n}`,
-    pyroNote: (one, ten) => `あと 1回募集 ${one} 回分、10回募集 ${ten} 回分。`,
-    pyroEmpty: "青輝石が不足している。初期所持数を増やすか、全リセットする。",
     h2: "同時開催中の募集",
     p2: "通常PU 2件と限定PU 2件が同時開催中。募集は1回または10回。",
     bannerName: (id) =>
@@ -94,19 +85,9 @@ const I18N = {
     tagL: "Shared by limited C and D",
     s100: "100<br>3★ guaranteed, 50% pickup",
     s200: "200<br>Pickup guaranteed",
-    h7: "Pyroxene",
-    p7: "A single pull costs 120 and a 10-pull costs 1200. Pulls you cannot afford are disabled.",
-    lblBal: "Current pyroxene",
-    tagCost: "120 per pull / 1200 per 10",
     lblStart: "Starting amount",
-    lblSpent: "Pyroxene spent",
     pyroLabel: "Pyroxene",
     pyroHint: "Pulls already made are kept.",
-    pyroPulls: (n) => `Across ${n} pull${n === 1 ? "" : "s"}.`,
-    pyroOf: (n) => `/ ${n}`,
-    pyroNote: (one, ten) =>
-      `Enough for ${one} more single pull${one === 1 ? "" : "s"} or ${ten} 10-pull${ten === 1 ? "" : "s"}.`,
-    pyroEmpty: "Not enough pyroxene. Raise the starting amount or reset.",
     h2: "Concurrent banners",
     p2: "Two standard and two limited pickup banners in the same period. Pull 1 or 10 at a time.",
     bannerName: (id) =>
@@ -206,24 +187,13 @@ const $ = {};
   "nn",
   "nl",
   "p4",
-  "h7",
-  "p7",
-  "lblBal",
-  "tagCost",
   "lblStart",
-  "lblSpent",
-  "pyroBal",
-  "pyroOf",
-  "pyroSpent",
-  "pyroPulls",
   "pyroStart",
-  "pyroNote",
   "pyroMenu",
   "pyroTrigger",
   "pyroPanel",
   "pyroCount",
   "pyroHint",
-  "fp",
   "bonus",
   "lastLabel",
   "slots",
@@ -426,12 +396,7 @@ function renderStatic() {
   $.h4.textContent = T.h4;
   $.h5.textContent = T.h5;
   $.h6.textContent = T.h6;
-  $.h7.textContent = T.h7;
-  $.p7.textContent = T.p7;
-  $.lblBal.textContent = T.lblBal;
-  $.tagCost.textContent = T.tagCost;
   $.lblStart.textContent = T.lblStart;
-  $.lblSpent.textContent = T.lblSpent;
   $.pyroHint.textContent = T.pyroHint;
   $.pyroTrigger.setAttribute("aria-label", T.pyroLabel);
   $.lbl3.textContent = T.lbl3;
@@ -462,18 +427,7 @@ function render() {
   $.nn.textContent = note(S.charge.normal, T.tNormal);
   $.nl.textContent = note(S.charge.limited, T.tLimited);
 
-  const bal = balance();
-  $.pyroBal.textContent = bal;
-  $.pyroCount.textContent = bal.toLocaleString();
-  $.pyroOf.textContent = T.pyroOf(S.pyro.start);
-  $.pyroSpent.textContent = S.pyro.spent;
-  $.pyroPulls.textContent = T.pyroPulls(S.pyro.spent / PYRO_PER_PULL);
-  $.fp.style.width =
-    (S.pyro.start > 0 ? Math.max(0, (bal / S.pyro.start) * 100) : 0) + "%";
-  $.fp.classList.toggle("low", !affords(10));
-  $.pyroNote.textContent = affords(1)
-    ? T.pyroNote(Math.floor(bal / PYRO_PER_PULL), Math.floor(bal / (PYRO_PER_PULL * 10)))
-    : T.pyroEmpty;
+  $.pyroCount.textContent = balance().toLocaleString();
   $.banners.querySelectorAll("[data-b]").forEach((el) => {
     el.disabled = !affords(+el.dataset.n);
   });

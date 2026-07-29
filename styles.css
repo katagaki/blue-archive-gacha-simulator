@@ -426,15 +426,6 @@ main {
   background: var(--support-error);
 }
 
-.fill.p {
-  background: var(--support-success);
-}
-
-/* Below the cost of a 10-pull the balance is about to block pulls. */
-.fill.p.low {
-  background: var(--support-error);
-}
-
 .mark {
   position: absolute;
   top: -4px;
