@@ -13,10 +13,51 @@
       <span class="header__spacer"></span>
 
       <nav class="header__actions" id="headerActions" aria-label="Actions">
-        <button class="header__btn" id="autoBtn"></button>
         <button class="header__btn" id="periodBtn"></button>
         <button class="header__btn" id="resetBtn"></button>
       </nav>
+
+      <div class="menu" id="pyroMenu">
+        <button
+          class="header__btn header__btn--menu"
+          id="pyroTrigger"
+          aria-haspopup="dialog"
+          aria-expanded="false"
+          aria-controls="pyroPanel"
+        >
+          <svg
+            class="icon"
+            viewBox="0 0 32 32"
+            aria-hidden="true"
+            focusable="false"
+          >
+            <path d="M10 3h12l8 9-14 17L2 12Zm1.2 2L5.4 11h6.1l2.1-6Zm5.3 0-2.1 6h7.2l-2.1-6Zm5.4 0 2.1 6h6.1l-5.8-6ZM5.9 13l8.4 10.2L11.6 13Zm7.8 0 2.3 8.9 2.3-8.9Zm6.7 0-2.7 10.2L26.1 13Z" />
+          </svg>
+          <span
+            class="header__btn-label header__btn-label--keep mono"
+            id="pyroCount"
+            >0</span
+          >
+        </button>
+        <div
+          class="menu__list menu__panel"
+          id="pyroPanel"
+          role="dialog"
+          aria-labelledby="lblStart"
+          hidden
+        >
+          <label class="lbl" for="pyroStart" id="lblStart"></label>
+          <input
+            class="numfield"
+            type="number"
+            id="pyroStart"
+            min="0"
+            step="1200"
+            value="12000"
+          />
+          <p class="note" id="pyroHint"></p>
+        </div>
+      </div>
 
       <div class="menu" id="langMenu">
         <button
@@ -122,6 +163,33 @@
             ><span class="r" style="left: 100%" id="s200l"></span>
           </div>
           <p class="note" id="nl"></p>
+        </div>
+      </div>
+
+      <div class="section-head">
+        <h2 id="h7"></h2>
+        <p id="p7"></p>
+      </div>
+      <div class="grid g2">
+        <div class="tile">
+          <span class="lbl"
+            ><span id="lblBal"></span> <span class="tag b" id="tagCost"></span
+          ></span>
+          <div class="meter-row">
+            <span class="big" id="pyroBal">0</span
+            ><span class="lbl" style="margin: 0 0 6px" id="pyroOf"></span>
+          </div>
+          <div class="track">
+            <div class="fill p" id="fp"></div>
+          </div>
+          <p class="note" id="pyroNote"></p>
+        </div>
+        <div class="tile">
+          <span class="lbl" id="lblSpent"></span>
+          <div class="meter-row">
+            <span class="big" id="pyroSpent">0</span>
+          </div>
+          <p class="note" id="pyroPulls"></p>
         </div>
       </div>
 

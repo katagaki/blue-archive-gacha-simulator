@@ -2,17 +2,28 @@ const I18N = {
   ja: {
     appName: "募集チャージ シミュレーター",
     appSub: "2026/07/29 リニューアル仕様",
-    auto: "PUまで自動",
-    period: "次の開催期間",
+    period: "次のバナー",
     reset: "全リセット",
     h1: "呼び出しチャージ",
-    p1: "通常と限定は共有されない。同種類の募集でPU対象を獲得した時のみリセットされる。",
+    p1: "通常募集と呼び出しポイントは廃止。チャージは通常と限定で共有されない。募集したバナーのPU対象を獲得した時のみリセットされ、他バナーのPU対象やPU以外の★3ではリセットされない。",
     lblN: "呼び出しチャージ",
     tagN: "通常PU A・B 共有",
     lblL: "限定・呼び出しチャージ",
     tagL: "限定PU C・D 共有",
     s100: "100<br>★3確定・PU 50%",
     s200: "200<br>PU確定",
+    h7: "青輝石",
+    p7: "1回募集は 120、10回募集は 1200 を消費する。所持数が足りない募集は選択できない。",
+    lblBal: "所持青輝石",
+    tagCost: "1回 120 / 10回 1200",
+    lblStart: "初期所持数",
+    lblSpent: "消費した青輝石",
+    pyroLabel: "青輝石",
+    pyroHint: "募集済みの分はそのまま維持される。",
+    pyroPulls: (n) => `${n} 回募集した。`,
+    pyroOf: (n) => `/ ${n}`,
+    pyroNote: (one, ten) => `あと 1回募集 ${one} 回分、10回募集 ${ten} 回分。`,
+    pyroEmpty: "青輝石が不足している。初期所持数を増やすか、全リセットする。",
     h2: "同時開催中の募集",
     p2: "通常PU 2件と限定PU 2件が同時開催中。募集は1回または10回。",
     bannerName: (id) =>
@@ -30,15 +41,23 @@ const I18N = {
     noPull: "まだ募集していません",
     lastLabel: (n, name) => `${name} — ${n}回募集`,
     h4: "募集回数特典",
-    p4: (n) => `4バナー共通で累計。募集期間ごとにリセットされる。累計 ${n} 回`,
-    rewards: [
-      "育成素材",
-      "10回募集チケット",
-      "育成素材",
-      "10回募集チケット×2",
-      "育成素材",
-      "特別報酬",
-    ],
+    p4: (n) =>
+      `4バナー共通で累計。募集期間の終了でカウントと報酬獲得状況がリセットされる。アーカイブ募集と有償商品での募集はカウントされない。累計 ${n} 回`,
+    bonusFirst: "初回特典",
+    bonusRepeat: (c) => `繰り返し特典（${c} 巡目）`,
+    items: {
+      bdAdv: "上級戦術教育BD選択ボックス",
+      bdSup: "最上級戦術教育BD選択ボックス",
+      eligma: "神名のカケラ",
+      techAdv: "上級技術ノート選択ボックス",
+      techSup: "最上級技術ノート選択ボックス",
+      techSecret: "秘伝ノート",
+      ticket10: "期間限定10回募集チケット",
+      gift: "贈り物ボックス",
+      giftPremium: "高級贈り物ボックス",
+      keystone: "キーストーンのカケラ",
+    },
+    reward: (name, x) => `${name}×${x}`,
     h5: "確率設定",
     lbl3: "★3 合計確率",
     lblP: "うちPU1人あたり",
@@ -54,7 +73,6 @@ const I18N = {
     tLimited: "限定",
     logHit: (id, c, t) => `${id} / ${c}回目 → PU獲得。${t}チャージをリセット`,
     log3: (id, c, r) => `${id} / ${c}回目 → ★3（PU以外）${r ? " — " + r : ""}`,
-    logAuto: (id, n) => `自動実行: ${id} を ${n} 回募集して PU 獲得`,
     logPeriod:
       "新しい開催期間: 募集回数特典をリセット（呼び出しチャージは維持）",
     r200: "200到達 PU確定",
@@ -66,17 +84,29 @@ const I18N = {
   en: {
     appName: "Recruitment charge simulator",
     appSub: "2026-07-29 revamp",
-    auto: "Auto-pull to PU",
-    period: "Next period",
+    period: "Next banner",
     reset: "Reset all",
     h1: "Recruitment charge",
-    p1: "Standard and limited charges are not shared. A charge resets only when a pickup student is obtained on a banner of the same type.",
+    p1: "Standard recruitment and recruitment points are discontinued. Standard and limited charges are not shared. A charge resets only when the pulled banner's own pickup student is obtained — not for another banner's pickup, and not for an off-pickup 3★.",
     lblN: "Recruitment charge",
     tagN: "Shared by standard A and B",
     lblL: "Limited recruitment charge",
     tagL: "Shared by limited C and D",
     s100: "100<br>3★ guaranteed, 50% pickup",
     s200: "200<br>Pickup guaranteed",
+    h7: "Pyroxene",
+    p7: "A single pull costs 120 and a 10-pull costs 1200. Pulls you cannot afford are disabled.",
+    lblBal: "Current pyroxene",
+    tagCost: "120 per pull / 1200 per 10",
+    lblStart: "Starting amount",
+    lblSpent: "Pyroxene spent",
+    pyroLabel: "Pyroxene",
+    pyroHint: "Pulls already made are kept.",
+    pyroPulls: (n) => `Across ${n} pull${n === 1 ? "" : "s"}.`,
+    pyroOf: (n) => `/ ${n}`,
+    pyroNote: (one, ten) =>
+      `Enough for ${one} more single pull${one === 1 ? "" : "s"} or ${ten} 10-pull${ten === 1 ? "" : "s"}.`,
+    pyroEmpty: "Not enough pyroxene. Raise the starting amount or reset.",
     h2: "Concurrent banners",
     p2: "Two standard and two limited pickup banners in the same period. Pull 1 or 10 at a time.",
     bannerName: (id) =>
@@ -95,15 +125,22 @@ const I18N = {
     lastLabel: (n, name) => `${name} — ${n} pull${n > 1 ? "s" : ""}`,
     h4: "Recruitment count rewards",
     p4: (n) =>
-      `Accumulated across all four banners. Resets each period. Total ${n} pulls`,
-    rewards: [
-      "Upgrade materials",
-      "10-pull ticket",
-      "Upgrade materials",
-      "10-pull ticket x2",
-      "Upgrade materials",
-      "Special reward",
-    ],
+      `Accumulated across all four banners. The count and the claimed rewards reset when the recruitment period ends. Archive recruitment and paid recruitment do not count. Total ${n} pulls`,
+    bonusFirst: "First-time rewards",
+    bonusRepeat: (c) => `Repeat rewards (cycle ${c})`,
+    items: {
+      bdAdv: "Advanced Tactical Training BD Select Box",
+      bdSup: "Superior Tactical Training BD Select Box",
+      eligma: "Eligma",
+      techAdv: "Advanced Tech Notes Select Box",
+      techSup: "Superior Tech Notes Select Box",
+      techSecret: "Secret Tech Notes",
+      ticket10: "Limited-time 10-recruitment ticket",
+      gift: "Gift Box",
+      giftPremium: "Premium Gift Box",
+      keystone: "Keystone Fragment",
+    },
+    reward: (name, x) => `${name} x${x}`,
     h5: "Rate settings",
     lbl3: "Total 3★ rate",
     lblP: "Per pickup student",
@@ -121,7 +158,6 @@ const I18N = {
       `${id} / pull ${c} — pickup obtained, ${t} charge reset`,
     log3: (id, c, r) =>
       `${id} / pull ${c} — 3★ off-pickup${r ? " — " + r : ""}`,
-    logAuto: (id, n) => `Auto: ${n} pulls on ${id} to reach the pickup`,
     logPeriod: "New period — recruitment count rewards reset, charges kept",
     r200: "200 reached, pickup guaranteed",
     r100hit: "100 reached, 3★ guaranteed, pickup won",
@@ -140,7 +176,6 @@ const $ = {};
   "langTrigger",
   "langLabel",
   "langList",
-  "autoBtn",
   "periodBtn",
   "resetBtn",
   "h1",
@@ -171,6 +206,24 @@ const $ = {};
   "nn",
   "nl",
   "p4",
+  "h7",
+  "p7",
+  "lblBal",
+  "tagCost",
+  "lblStart",
+  "lblSpent",
+  "pyroBal",
+  "pyroOf",
+  "pyroSpent",
+  "pyroPulls",
+  "pyroStart",
+  "pyroNote",
+  "pyroMenu",
+  "pyroTrigger",
+  "pyroPanel",
+  "pyroCount",
+  "pyroHint",
+  "fp",
   "bonus",
   "lastLabel",
   "slots",
@@ -205,16 +258,64 @@ const BANNERS = [
   { id: "C", type: "limited" },
   { id: "D", type: "limited" },
 ];
-const MILESTONES = [10, 30, 60, 100, 150, 200];
+/* 募集回数特典: the first-time track runs 10 → 390, then the repeat track
+   cycles every 200 pulls starting from 410. */
+const FIRST_BONUS = [
+  [10, "bdAdv", 2],
+  [30, "eligma", 10],
+  [50, "techAdv", 5],
+  [70, "ticket10", 1],
+  [90, "gift", 2],
+  [110, "eligma", 20],
+  [130, "ticket10", 1],
+  [150, "ticket10", 1],
+  [170, "ticket10", 1],
+  [190, "techSup", 5],
+  [210, "bdAdv", 2],
+  [230, "eligma", 10],
+  [250, "techAdv", 5],
+  [270, "ticket10", 1],
+  [290, "gift", 2],
+  [310, "eligma", 20],
+  [330, "ticket10", 1],
+  [350, "ticket10", 1],
+  [370, "ticket10", 1],
+  [390, "techSup", 5],
+];
+const REPEAT_BASE = 390;
+const REPEAT_SPAN = 200;
+const REPEAT_BONUS = [
+  [20, "bdAdv", 1],
+  [40, "techAdv", 3],
+  [60, "gift", 1],
+  [80, "keystone", 30],
+  [100, "eligma", 10],
+  [120, "techSecret", 1],
+  [140, "bdSup", 1],
+  [160, "giftPremium", 1],
+  [180, "techSup", 3],
+  [200, "eligma", 10],
+];
+
+/* Cycle 0 covers 410–590; once past its last node the next cycle is shown. */
+function repeatCycle(bonus) {
+  return Math.max(0, Math.ceil((bonus - REPEAT_BASE) / REPEAT_SPAN) - 1);
+}
+/* 青輝石: a single pull costs 120 and a 10-pull costs exactly 10x that, so
+   one per-pull constant covers both. */
+const PYRO_PER_PULL = 120;
 const S = {
   charge: { normal: 0, limited: 0 },
   pulls: {},
   got: {},
   bonus: 0,
+  pyro: { start: 12000, spent: 0 },
   log: [],
   last: null,
   lastBanner: null,
 };
+const balance = () => S.pyro.start - S.pyro.spent;
+const affords = (n) => balance() >= n * PYRO_PER_PULL;
 BANNERS.forEach((b) => {
   S.pulls[b.id] = 0;
   S.got[b.id] = 0;
@@ -228,6 +329,7 @@ const rates = () => ({
 
 function pullOnce(banner) {
   const type = banner.type;
+  S.pyro.spent += PYRO_PER_PULL;
   S.charge[type] += 1;
   S.bonus += 1;
   S.pulls[banner.id] += 1;
@@ -257,6 +359,7 @@ function pullOnce(banner) {
 }
 
 function pull(banner, n) {
+  if (!affords(n)) return;
   const res = [];
   for (let i = 0; i < n; i++) {
     const r = pullOnce(banner);
@@ -284,25 +387,11 @@ function pull(banner, n) {
   render();
 }
 
-function autoRun() {
-  const b = BANNERS[2];
-  let n = 0;
-  const start = S.got[b.id];
-  while (S.got[b.id] === start && n < 400) {
-    pullOnce(b);
-    n++;
-  }
-  S.log.unshift({ k: "auto", id: b.id, n, cls: "hit" });
-  S.last = null;
-  render();
-}
-
 function logText(l) {
   const T = t();
   if (l.k === "hit")
     return T.logHit(l.id, l.c, l.type === "normal" ? T.tNormal : T.tLimited);
   if (l.k === "g3") return T.log3(l.id, l.c, l.reasonKey ? T[l.reasonKey] : "");
-  if (l.k === "auto") return T.logAuto(l.id, l.n);
   if (l.k === "period") return T.logPeriod;
   return "";
 }
@@ -319,7 +408,6 @@ function renderStatic() {
   document.documentElement.lang = L;
   document.title = T.appName;
   $.hName.innerHTML = `${T.appName}<em>${T.appSub}</em>`;
-  $.autoBtn.textContent = T.auto;
   $.periodBtn.textContent = T.period;
   $.resetBtn.textContent = T.reset;
   $.h1.textContent = T.h1;
@@ -338,6 +426,14 @@ function renderStatic() {
   $.h4.textContent = T.h4;
   $.h5.textContent = T.h5;
   $.h6.textContent = T.h6;
+  $.h7.textContent = T.h7;
+  $.p7.textContent = T.p7;
+  $.lblBal.textContent = T.lblBal;
+  $.tagCost.textContent = T.tagCost;
+  $.lblStart.textContent = T.lblStart;
+  $.lblSpent.textContent = T.lblSpent;
+  $.pyroHint.textContent = T.pyroHint;
+  $.pyroTrigger.setAttribute("aria-label", T.pyroLabel);
   $.lbl3.textContent = T.lbl3;
   $.lblP.textContent = T.lblP;
   $.lbl2.textContent = T.lbl2;
@@ -366,11 +462,35 @@ function render() {
   $.nn.textContent = note(S.charge.normal, T.tNormal);
   $.nl.textContent = note(S.charge.limited, T.tLimited);
 
+  const bal = balance();
+  $.pyroBal.textContent = bal;
+  $.pyroCount.textContent = bal.toLocaleString();
+  $.pyroOf.textContent = T.pyroOf(S.pyro.start);
+  $.pyroSpent.textContent = S.pyro.spent;
+  $.pyroPulls.textContent = T.pyroPulls(S.pyro.spent / PYRO_PER_PULL);
+  $.fp.style.width =
+    (S.pyro.start > 0 ? Math.max(0, (bal / S.pyro.start) * 100) : 0) + "%";
+  $.fp.classList.toggle("low", !affords(10));
+  $.pyroNote.textContent = affords(1)
+    ? T.pyroNote(Math.floor(bal / PYRO_PER_PULL), Math.floor(bal / (PYRO_PER_PULL * 10)))
+    : T.pyroEmpty;
+  $.banners.querySelectorAll("[data-b]").forEach((el) => {
+    el.disabled = !affords(+el.dataset.n);
+  });
+
   $.p4.innerHTML = T.p4(`<b class="mono">${S.bonus}</b>`);
-  $.bonus.innerHTML = MILESTONES.map(
-    (n, i) =>
-      `<div class="node ${S.bonus >= n ? "done" : ""}"><div class="n">${n}</div><div class="r">${T.rewards[i]}</div></div>`,
-  ).join("");
+  const cycle = repeatCycle(S.bonus);
+  const base = REPEAT_BASE + cycle * REPEAT_SPAN;
+  const node = (n, item, x, tag) =>
+    `<div class="node ${S.bonus >= n ? "done" : ""}"><div class="n">${n}${tag ? `<span class="node__tag">${tag}</span>` : ""}</div><div class="r">${T.reward(T.items[item], x)}</div></div>`;
+  $.bonus.innerHTML = [
+    `<div class="bonus__head">${T.bonusFirst}</div>`,
+    ...FIRST_BONUS.map(([n, item, x]) => node(n, item, x)),
+    `<div class="bonus__head">${T.bonusRepeat(cycle + 1)}</div>`,
+    ...REPEAT_BONUS.map(([offset, item, x]) =>
+      node(base + offset, item, x, `${offset}`),
+    ),
+  ].join("");
 
   if (S.last) {
     $.lastLabel.textContent = T.lastLabel(
@@ -440,10 +560,6 @@ RATE_SLIDERS.forEach(([range]) => {
   );
 });
 
-$.autoBtn.onclick = () => {
-  closeMenus();
-  autoRun();
-};
 $.periodBtn.onclick = () => {
   closeMenus();
   S.bonus = 0;
@@ -455,6 +571,7 @@ $.resetBtn.onclick = () => {
   closeMenus();
   S.charge = { normal: 0, limited: 0 };
   S.bonus = 0;
+  S.pyro.spent = 0;
   S.log = [];
   S.last = null;
   BANNERS.forEach((b) => {
@@ -478,23 +595,46 @@ function setOverflowOpen(open) {
   $.headerActions.classList.toggle("is-open", open);
   $.overflowBtn.setAttribute("aria-expanded", String(open));
 }
+function setPyroOpen(open) {
+  $.pyroPanel.hidden = !open;
+  $.pyroTrigger.setAttribute("aria-expanded", String(open));
+  if (open) $.pyroStart.focus();
+}
 function closeMenus() {
   setLangOpen(false);
   setOverflowOpen(false);
+  setPyroOpen(false);
 }
 const langOpen = () => $.langTrigger.getAttribute("aria-expanded") === "true";
 const overflowOpen = () =>
   $.overflowBtn.getAttribute("aria-expanded") === "true";
+const pyroOpen = () => $.pyroTrigger.getAttribute("aria-expanded") === "true";
 
 $.langTrigger.onclick = () => {
   const open = !langOpen();
   setOverflowOpen(false);
+  setPyroOpen(false);
   setLangOpen(open);
 };
 $.overflowBtn.onclick = () => {
   const open = !overflowOpen();
   setLangOpen(false);
+  setPyroOpen(false);
   setOverflowOpen(open);
+};
+$.pyroTrigger.onclick = () => {
+  const open = !pyroOpen();
+  setLangOpen(false);
+  setOverflowOpen(false);
+  setPyroOpen(open);
+};
+
+/* The starting amount may be lowered below what has already been spent, so
+   keep the two consistent rather than letting the balance go negative. */
+$.pyroStart.oninput = () => {
+  S.pyro.start = Math.max(0, Math.floor(+$.pyroStart.value || 0));
+  S.pyro.spent = Math.min(S.pyro.spent, S.pyro.start);
+  render();
 };
 
 $.langList.addEventListener("click", (e) => {
@@ -527,9 +667,14 @@ document.addEventListener("keydown", (e) => {
     setOverflowOpen(false);
     $.overflowBtn.focus();
   }
+  if (pyroOpen()) {
+    setPyroOpen(false);
+    $.pyroTrigger.focus();
+  }
 });
 document.addEventListener("click", (e) => {
   if (!$.langMenu.contains(e.target) && langOpen()) setLangOpen(false);
+  if (!$.pyroMenu.contains(e.target) && pyroOpen()) setPyroOpen(false);
   if (
     !$.headerActions.contains(e.target) &&
     e.target !== $.overflowBtn &&

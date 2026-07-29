@@ -15,6 +15,8 @@
   --button-primary-hover: #0353e9;
   --button-secondary: #393939;
   --button-secondary-hover: #4c4c4c;
+  --button-disabled: #c6c6c6;
+  --text-disabled: #8d8d8d;
   --support-error: #da1e28;
   --support-success: #24a148;
   --tag-blue-bg: #d0e2ff;
@@ -51,6 +53,8 @@
     --interactive: #4589ff;
     --button-secondary: #6f6f6f;
     --button-secondary-hover: #5e5e5e;
+    --button-disabled: #525252;
+    --text-disabled: #8d8d8d;
     --support-error: #fa4d56;
     --support-success: #42be65;
     --tag-blue-bg: #0043ce;
@@ -215,6 +219,40 @@ body {
 
 .menu__list[hidden] {
   display: none;
+}
+
+/* The pyroxene popover holds a field rather than a list of options. */
+.menu__panel {
+  padding: 16px;
+  min-width: 240px;
+}
+
+.menu__panel .lbl {
+  color: var(--header-fg);
+}
+
+.numfield {
+  appearance: none;
+  font: inherit;
+  font-family: var(--mono);
+  font-size: 14px;
+  width: 100%;
+  min-height: 40px;
+  padding: 0 12px;
+  color: var(--header-fg);
+  background: var(--menu-hover);
+  border: none;
+  border-bottom: 1px solid var(--menu-border);
+}
+
+.numfield:focus-visible {
+  outline: 2px solid var(--interactive);
+  outline-offset: -2px;
+}
+
+.menu__panel .note {
+  margin-top: 8px;
+  color: var(--text-helper);
 }
 
 .menu__item {
@@ -388,6 +426,15 @@ main {
   background: var(--support-error);
 }
 
+.fill.p {
+  background: var(--support-success);
+}
+
+/* Below the cost of a 10-pull the balance is about to block pulls. */
+.fill.p.low {
+  background: var(--support-error);
+}
+
 .mark {
   position: absolute;
   top: -4px;
@@ -449,6 +496,18 @@ main {
 .btn:focus-visible {
   outline: 2px solid var(--interactive);
   outline-offset: -4px;
+}
+
+.btn:disabled {
+  background: var(--button-disabled);
+  color: var(--text-disabled);
+  cursor: not-allowed;
+}
+
+.btn.tert:disabled {
+  background: transparent;
+  border-color: var(--button-disabled);
+  color: var(--text-disabled);
 }
 
 .btn.sec {
@@ -643,17 +702,35 @@ input[type="range"]:focus-visible::-moz-range-thumb {
 
 .bonus {
   display: grid;
-  grid-template-columns: repeat(6, minmax(0, 1fr));
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 1px;
   background: var(--border-subtle);
   border: 1px solid var(--border-subtle);
   margin-top: 16px;
 }
 
+.bonus__head {
+  grid-column: 1 / -1;
+  background: var(--layer-01);
+  padding: 8px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.32px;
+  color: var(--text-secondary);
+}
+
 .node {
   background: var(--layer-02);
   padding: 12px;
   border-top: 3px solid var(--border-subtle);
+}
+
+.node__tag {
+  font-family: var(--sans);
+  font-size: 11px;
+  color: var(--text-secondary);
+  margin-left: 6px;
+  letter-spacing: 0.32px;
 }
 
 .node.done {
@@ -704,6 +781,10 @@ input[type="range"]:focus-visible::-moz-range-thumb {
   .g4 {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+
+  .bonus {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
 }
 
 @media (max-width: 671px) {
@@ -717,7 +798,7 @@ input[type="range"]:focus-visible::-moz-range-thumb {
   }
 
   .bonus {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .header {
@@ -779,6 +860,11 @@ input[type="range"]:focus-visible::-moz-range-thumb {
   .header__btn-label,
   .header__btn--menu .icon--chevron {
     display: none;
+  }
+
+  /* The balance is the point of the toolbar chip, so it stays visible. */
+  .header__btn-label--keep {
+    display: inline;
   }
 
   .menu__list {
